@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Gunakan SQLite untuk development yang lebih mudah
+// Untuk production, bisa diganti ke PostgreSQL
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  nama        String
+  harga       Int
+  deskripsi   String
+  kategori    String
+  imageUrl    String
+  stok        Int      @default(0)
+  isUnlimited Boolean  @default(false)
+  
+  // Relasi ke Mitra (Opsional, jika null berarti produk kita sendiri)
+  mitraId     Int?
+  mitra       Mitra?   @relation(fields: [mitraId], references: [id])
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Mitra {
+  id          Int       @id @default(autoincrement())
+  nama        String
+  noHp        String
+  persenBagi  Int       @default(90) // Persentase untuk Mitra (misal 90%)
+  alamat      String?
+  products    Product[]
+  createdAt   DateTime  @default(now())
+}
+
+model Order {
+  id            Int      @id @default(autoincrement())
+  namaPelanggan String
+  noHp          String   @default("-") // Default string kosong sementara migrate
+  alamat        String   @default("-") 
+  items         String   // JSON string
+  total         Int
+  status        String   @default("PENDING") // PENDING, PROCESSED, COMPLETED, CANCELLED
+  createdAt     DateTime @default(now())
+}

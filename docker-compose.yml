@@ -1,0 +1,27 @@
+services:
+  waha:
+    image: devlikeapro/waha
+    container_name: waha
+    restart: always
+    ports:
+      - "3000:3000"
+    # Mapping host.docker.internal for Linux
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - WHATSAPP_DEFAULT_ENGINE=WEBJS
+      - WAHA_ZIPKIN_ENABLED=false
+      - WAHA_API_KEY=secret
+      # Dashboard Credentials
+      - WAHA_DASHBOARD_USERNAME=admin
+      - WAHA_DASHBOARD_PASSWORD=admin123
+      # Swagger/API Credentials
+      - WHATSAPP_SWAGGER_USERNAME=admin
+      - WHATSAPP_SWAGGER_PASSWORD=admin123
+      # Webhooks
+      - WAHA_WEBHOOK_URL=http://host.docker.internal:5000/api/webhook
+      - WAHA_WEBHOOK_EVENTS=message,message.any,state.change,unread_count
+      # Debugging
+      - WAHA_LOG_LEVEL=DEBUG
+    volumes:
+      - ./waha-sessions:/app/sessions

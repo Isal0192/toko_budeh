@@ -1,0 +1,21 @@
+-- CreateTable
+CREATE TABLE "Product" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "nama" TEXT NOT NULL,
+    "harga" INTEGER NOT NULL,
+    "deskripsi" TEXT NOT NULL,
+    "kategori" TEXT NOT NULL,
+    "imageUrl" TEXT NOT NULL,
+    "stok" INTEGER NOT NULL DEFAULT 0,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "Order" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "namaPelanggan" TEXT NOT NULL,
+    "items" TEXT NOT NULL,
+    "total" INTEGER NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
