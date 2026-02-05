@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { ShoppingCart, Store, Loader } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { fetchProducts } from '../services/api';
-import ProductCard from '../components/ProductCard';
-import CategoryFilter from '../components/CategoryFilter';
-import CartModal from '../components/CartModal';
+import ProductCard from '../components/organisms/ProductCard';
+import CategoryFilter from '../components/molecules/CategoryFilter';
+import CartModal from '../components/organisms/CartModal';
 
 function HomePage() {
     const [products, setProducts] = useState([]);

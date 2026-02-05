@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { KeyRound, ArrowRight } from 'lucide-react';
+import Input from '../components/atoms/Input';
+import Button from '../components/atoms/Button';
+import Card from '../components/atoms/Card';
 
 const LoginPage = () => {
     const [password, setPassword] = useState('');
@@ -24,9 +27,7 @@ const LoginPage = () => {
             const data = await response.json();
 
             if (data.success) {
-                // Simpan token
                 localStorage.setItem('adminToken', data.token);
-                // Redirect ke admin
                 navigate('/admin');
             } else {
                 setError(data.message || 'Login gagal');
@@ -40,7 +41,7 @@ const LoginPage = () => {
 
     return (
         <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-            <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
+            <Card className="w-full max-w-md p-8">
                 <div className="text-center mb-8">
                     <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                         <KeyRound size={32} className="text-primary-600" />
@@ -55,43 +56,42 @@ const LoginPage = () => {
                     </div>
                 )}
 
-                <form onSubmit={handleLogin}>
-                    <div className="mb-6">
+                <form onSubmit={handleLogin} className="space-y-6">
+                    <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                             Password Admin
                         </label>
-                        <input
+                        <Input
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="input-field py-3"
                             placeholder="Masukkan password admin..."
                             required
                         />
                     </div>
 
-                    <button
+                    <Button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full btn-primary py-3 flex items-center justify-center gap-2 text-lg"
                     >
                         {isLoading ? 'Memproses...' : (
                             <>
                                 Masuk <ArrowRight size={20} />
                             </>
                         )}
-                    </button>
+                    </Button>
                 </form>
 
                 <div className="mt-6 text-center">
-                    <button
+                    <Button
+                        variant="ghost"
                         onClick={() => navigate('/')}
-                        className="text-sm text-gray-500 hover:text-primary-600"
+                        className="text-sm"
                     >
                         &larr; Kembali ke Toko
-                    </button>
+                    </Button>
                 </div>
-            </div>
+            </Card>
         </div>
     );
 };
